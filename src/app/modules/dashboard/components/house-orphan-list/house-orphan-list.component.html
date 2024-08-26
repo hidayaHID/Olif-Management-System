@@ -1,0 +1,200 @@
+<div class="container-fluid mt-4">
+    <button type="button" class="btn btn-primary btn-sm shadow-none" data-bs-toggle="modal"
+        data-bs-target="#addNewOrphanModal">
+        <i class="fas fa-add"></i>
+        Add New Orphan
+    </button>
+    <table class="table table-bordered table-hover bg-white text-center">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">House Number</th>
+                <th scope="col">Address</th>
+                <th scope="col">Orphan Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Orphan Type</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let houseOrphan of houseOrphans | paginate: {
+                itemsPerPage: tableSize,
+                currentPage: pageNumber,
+                totalItems: count}; let i = index;">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ houseOrphan.house.houseNumber }}</td>
+                <td>{{ houseOrphan.house.address }}</td>
+                <td>{{ houseOrphan.firstName }} {{ houseOrphan.lastName }}</td>
+                <td>{{ houseOrphan.gender }}</td>
+                <td>{{ houseOrphan.orphanType }}</td>
+                <td>{{ houseOrphan.phoneNumber }}</td>
+
+                <td>
+                    <button (click)="findOrphan(houseOrphan.orphanId)" data-bs-toggle="modal"
+                        data-bs-target="#updateOrphanModal" class="btn btn-outline-primary shadow-none btn-sm me-2">
+                        Edit
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" style="cursor: pointer;">
+        <ul class="pagination justify-content-end">
+            <li class="  bg-white">
+                <a class="">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)"
+                        class="" style="cursor: pointer;">
+                    </pagination-controls>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+</div>
+
+
+<!-- ADD ORPHAN -->
+<div class="modal fade" id="addNewOrphanModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form #addForm="ngForm" (ngSubmit)="registerNewOrphan(addForm.value)">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Donor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label for="">First Name</label>
+                            <input type="text" name="firstName" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Last Name</label>
+                            <input type="text" name="lastName" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Address</label>
+                            <input type="text" name="address" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Date Of Birth</label>
+                            <input type="date" name="dateOfBirth" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Phone Number</label>
+                            <input type="text" name="phoneNumber" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Gender</label>
+                            <select name="gender" ngModel="Male" class="form-select shadow-none">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Orpahn Type</label>
+                            <select name="orphanType" ngModel="Father" class="form-select shadow-none">
+                                <option value="Father">Father</option>
+                                <option value="Mother">Mother</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Select House</label>
+                            <select name="house_id" ngModel (change)="getHouseId($event)"
+                                class="form-select shadow-none">
+                                <option value="" selected>Select House</option>
+                                <option *ngFor="let house of houses" value="{{ house.houseId }}">
+                                    {{ house.houseNumber }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="closeForm" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Close</button>
+                    <button type="submit" [disabled]="addForm.invalid" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- UPDATE ORPHAN -->
+<div class="modal fade" id="updateOrphanModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form #updateForm="ngForm" (ngSubmit)="onUpdateOrphan(updateForm.value)">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Orphan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label for="">First Name</label>
+                            <input type="text" name="firstName" [(ngModel)]="updateOrphan.firstName"
+                                class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Last Name</label>
+                            <input type="text" name="lastName" [(ngModel)]="updateOrphan.lastName" class="form-control"
+                                required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Address</label>
+                            <input type="text" name="address" [(ngModel)]="updateOrphan.address" class="form-control"
+                                required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Date Of Birth</label>
+                            <input type="date" name="dateOfBirth" [(ngModel)]="updateOrphan.dateOfBirth"
+                                class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Phone Number</label>
+                            <input type="text" name="phoneNumber" [(ngModel)]="updateOrphan.phoneNumber"
+                                class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Gender</label>
+                            <select name="gender" [(ngModel)]="updateOrphan.gender" class="form-select shadow-none">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Orpahn Type</label>
+                            <select name="orphanType" [(ngModel)]="updateOrphan.orphanType"
+                                class="form-select shadow-none">
+                                <option value="Father">Father</option>
+                                <option value="Mother">Mother</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <label for="">Select House</label>
+                            <select name="house_id" ngModel (change)="getHouseId($event)"
+                                class="form-select shadow-none">
+                                <option value="" selected>Select House</option>
+                                <option *ngFor="let house of houses" value="{{ house.houseId }}">
+                                    {{ house.houseNumber }}
+                                </option>
+                            </select>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="closeUpdateForm" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Close</button>
+                    <button type="submit" [disabled]="updateForm.invalid" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

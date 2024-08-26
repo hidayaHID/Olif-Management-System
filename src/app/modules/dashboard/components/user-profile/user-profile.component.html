@@ -1,0 +1,104 @@
+<!-- ADMIN -->
+<div [hidden]="!isAdminOrDonor" class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-center mt-4">
+                <div class="card-header fw-bold p-3">
+                    {{ currentUser.username }}
+                </div>
+                <div class="card-body">
+                    <img class="img-thumbnail" [src]="currentUser.profileImage"
+                        alt="Profile of {{ currentUser.username }}">
+                </div>
+                <div class="card-footer">
+                    <button type="button" (click)="onSaveProfileImage()" class="btn btn-sm col-md-12 btnProfile">Change
+                        Profile</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="card mt-4">
+                <div class="card-header text-center fw-bold p-3">
+                    {{ currentUser.username }}
+                </div>
+                <div class="card-body">
+                    <form #updateUserForm="ngForm">
+                        <div class="row">
+                            <div class="form-group col-md-6 mb-3">
+                                <label class="form-label">First Name</label>
+                                <input type="text" [(ngModel)]="currentUser.firstName" name="firstName"
+                                    placeholder="First Name" class="form-control shadow-none" required>
+                            </div>
+                            <div class="form-group col-md-6 mb-3">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" [(ngModel)]="currentUser.lastName" name="lastName"
+                                    placeholder="Last Name" class="form-control shadow-none" required>
+                            </div>
+                            <div class="form-group col-md-6 mb-3">
+                                <label class="form-label">Username</label>
+                                <input type="text" [(ngModel)]="currentUser.username" name="username"
+                                    placeholder="Username" class="form-control shadow-none" required>
+                            </div>
+                            <div class="form-group col-md-6 mb-3">
+                                <label class="form-label">E-mail</label>
+                                <input type="email" [(ngModel)]="currentUser.email" name="email"
+                                    placeholder="hassan@gmail.com" class="form-control shadow-none" required>
+                            </div>
+                            <div class="form-group col-md-6 mb-3">
+                                <label class="form-label">Phone Number</label>
+                                <input type="text" [(ngModel)]="currentUser.phoneNumber" name="phoneNumber"
+                                    placeholder="Phone Number" class="form-control shadow-none"
+                                    #phoneNumberInput="ngModel" required>
+                            </div>
+                            <div class="form-group col-md-6 mb-3">
+                                <label class="form-label">Address</label>
+                                <input type="text" [(ngModel)]="currentUser.address" name="address"
+                                    class="form-control shadow-none" required>
+                            </div>
+                            <!-- <div class="form-group col-md-12 mb-3">
+                                <label class="form-label">Date Of Birth</label>
+                                <input type="date" ngModel name="dateOfBirth" placeholder="Date Of Birth"
+                                    class="form-control shadow-none" required>
+                            </div> -->
+                            <div class="form-group col-md-6 mb-3">
+                                <label class="me-5 ps-2">Gender: </label>
+                                <div class="form-check form-check-inline me-5">
+                                    <input class="form-check-input" type="radio" [(ngModel)]="currentUser.gender"
+                                        name="gender" id="inlineRadio1" value="Male" checked>
+                                    <label class="form-check-label" for="inlineRadio1">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" [(ngModel)]="currentUser.gender"
+                                        name="gender" id="inlineRadio2" value="Female">
+                                    <label class="form-check-label" for="inlineRadio2">Female</label>
+                                </div>
+                            </div>
+
+                            <!-- BUTTON -->
+                            <button type="submit" (click)="onUpdateUser()" id="btnUpdateUserProfile"
+                                [hidden]="true"></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <button type="button" (click)="onSaveUpdateUserProfile()" class="btn col-md-6 btnProfile">Save
+                        Changes
+                    </button>
+                    <button type="button" routerLink="/dashboard/home" class="btn btn-warning col-md-5 float-end">
+                        <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                        Back
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- CHANGE PROFILE PICTURE -->
+<form [hidden]="true" enctype="multipart/form-data">
+    <input type="file" ngModel name="profileImage"
+        (change)="changeProfileImage($event.target.files[0].name, $event.target.files[0]); updateProfileImage()"
+        id="profileImageInput" accept="image/*" required>
+</form>

@@ -1,0 +1,136 @@
+<div [hidden]="!isAdmin" class="container-fluid mt-4">
+    <button type="button" class="btn btn-primary btn-sm shadow-none" data-bs-toggle="modal"
+        data-bs-target="#addNewStaffModal">
+        <i class="fas fa-add"></i>
+        Add New Advertisement
+    </button>
+    <table class="table table-bordered table-hover bg-white text-center">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let advertisement of advertisements | paginate: {
+                itemsPerPage: tableSize,
+                currentPage: pageNumber,
+                totalItems: count}; let i = index;">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ advertisement.title }}</td>
+                <td>{{ truncateDescription(advertisement.description, 4) }}</td>
+                <td>{{ advertisement.createdDate | date: 'fullDate' }}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm me-2">Edit</button>
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" style="cursor: pointer;">
+        <ul class="pagination justify-content-end">
+            <li class="  bg-white">
+                <a class="">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)"
+                        class="" style="cursor: pointer;">
+                    </pagination-controls>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+</div>
+
+<div [hidden]="!isDonor" class="container-fluid mt-4">
+
+    <div class="row">
+        <div *ngFor="let adv of advertisements" class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header p-3">
+                    <span class="fw-bold">{{ adv?.title }}</span>
+                </div>
+                <div class="card-body">
+                    <img src="{{ adv?.image }}" class="img-thumbnail img-adv" alt="">
+                </div>
+                <div class="card-footer">
+                    <span class="fw-bold">{{ adv?.createdDate | date: 'fullDate' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav aria-label="Page navigation" style="cursor: pointer;">
+        <ul class="pagination justify-content-end">
+            <li class="  bg-white">
+                <a class="">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)"
+                        class="" style="cursor: pointer;">
+                    </pagination-controls>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+</div>
+
+
+<!-- <div class="modal fade" id="addNewStaffModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form #addForm="ngForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Donor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label for="">First Name</label>
+                            <input type="text" name="firstName" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Last Name</label>
+                            <input type="text" name="lastName" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Username</label>
+                            <input type="text" name="username" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Password</label>
+                            <input type="password" name="password" ngModel placeholder="********" maxlength="8"
+                                class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">E-mail</label>
+                            <input type="text" name="email" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Phone Number</label>
+                            <input type="text" name="phoneNumber" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Address</label>
+                            <input type="text" name="address" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Role</label>
+                            <select name="role" ngModel="ROLE_DONOR" class="form-select shadow-none">
+                                <option value="ROLE_ADMIN">ADMIN</option>
+                                <option value="ROLE_DONOR">DONOR</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="closeForm" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Close</button>
+                    <button type="submit" [disabled]="addForm.invalid" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->

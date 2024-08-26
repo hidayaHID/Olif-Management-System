@@ -1,0 +1,200 @@
+<body class="sb-nav-fixed">
+  <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3 fw-bold text-center" routerLink="./home">{{
+      currentUser.username
+    }}</a>
+    <!-- Sidebar Toggle-->
+    <button
+      class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+      id="sidebarToggle"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+    <!-- Navbar Search-->
+    <span
+      class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
+    ></span>
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          id="navbarDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          ><i class="fas fa-user fa-fw"></i
+        ></a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="navbarDropdown"
+        >
+          <li><a class="dropdown-item" routerLink="./home">Dashboard</a></li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="./user-profile">My Account</a>
+          </li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li><a (click)="logOut()" class="dropdown-item cursor">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  <div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+      <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+          <div class="nav">
+            <div class="sb-sidenav-menu-heading">Core</div>
+            <a class="nav-link" routerLink="./home">
+              <div class="sb-nav-link-icon">
+                <i class="fas fa-tachometer-alt"></i>
+              </div>
+              Dashboard
+            </a>
+            <a
+              class="nav-link"
+              [hidden]="!isDonor"
+              routerLink="./create-donation"
+            >
+              <div class="sb-nav-link-icon"><i class="fas fa-eye"></i></div>
+              Create Donation
+            </a>
+            <a
+              class="nav-link"
+              [hidden]="!isDonor"
+              routerLink="./donor-donation-list"
+            >
+              <div class="sb-nav-link-icon"><i class="fas fa-eye"></i></div>
+              View Donations
+            </a>
+            <div [hidden]="!isAdmin" class="sb-sidenav-menu-heading">
+              Interface
+            </div>
+            <a
+              [hidden]="!isAdmin"
+              class="nav-link collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseLayouts"
+              aria-expanded="false"
+              aria-controls="collapseLayouts"
+              style="cursor: pointer"
+            >
+              <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+              Manage Users
+              <div class="sb-sidenav-collapse-arrow">
+                <i class="fas fa-angle-down"></i>
+              </div>
+            </a>
+            <div
+              [hidden]="!isAdmin"
+              class="collapse"
+              id="collapseLayouts"
+              aria-labelledby="headingOne"
+              data-bs-parent="#sidenavAccordion"
+            >
+              <nav class="sb-sidenav-menu-nested nav">
+                <a class="nav-link" routerLink="./user-list">View Users</a>
+                <a class="nav-link" routerLink="./house-orphan-list"
+                  >View Orphans</a
+                >
+              </nav>
+            </div>
+
+            <!-- DONATIONS -->
+            <a
+              [hidden]="!isAdmin"
+              class="nav-link collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseDonations"
+              aria-expanded="false"
+              aria-controls="collapseDonations"
+              style="cursor: pointer"
+            >
+              <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+              Manage Donations
+              <div class="sb-sidenav-collapse-arrow">
+                <i class="fas fa-angle-down"></i>
+              </div>
+            </a>
+            <div
+              class="collapse"
+              id="collapseDonations"
+              aria-labelledby="headingOne"
+              data-bs-parent="#sidenavAccordion"
+            >
+              <nav class="sb-sidenav-menu-nested nav">
+                <a
+                  class="nav-link"
+                  [hidden]="!isAdmin"
+                  routerLink="./make-donation"
+                  >Make Donation</a
+                >
+                <a
+                  class="nav-link"
+                  [hidden]="!isAdmin"
+                  routerLink="./donation-list"
+                  >View Donations</a
+                >
+                <a
+                  class="nav-link"
+                  [hidden]="!isAdmin"
+                  routerLink="./house-list"
+                  >View Houses</a
+                >
+                <a class="nav-link" [hidden]="!isAdmin" routerLink="./map"
+                  >View Houses In Map</a
+                >
+              </nav>
+            </div>
+
+            <!-- ADVERTISEMENT -->
+            <a
+              [hidden]="!isAdmin"
+              class="nav-link collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseAdvertisement"
+              aria-expanded="false"
+              aria-controls="collapseAdvertisement"
+              style="cursor: pointer"
+            >
+              <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+              Advertisements
+              <div class="sb-sidenav-collapse-arrow">
+                <i class="fas fa-angle-down"></i>
+              </div>
+            </a>
+            <div
+              [hidden]="!isAdmin"
+              class="collapse"
+              id="collapseAdvertisement"
+              aria-labelledby="headingOne"
+              data-bs-parent="#sidenavAccordion"
+            >
+              <nav class="sb-sidenav-menu-nested nav">
+                <a class="nav-link" routerLink="./create-advertisement"
+                  >Create Advertisement</a
+                >
+                <a class="nav-link" routerLink="./advertisement-list"
+                  >View Advertisement</a
+                >
+              </nav>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div id="layoutSidenav_content">
+      <main>
+        <div class="container-fluid px-4">
+          <router-outlet></router-outlet>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>

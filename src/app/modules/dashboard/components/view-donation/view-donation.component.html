@@ -1,0 +1,37 @@
+<!-- d-flex justify-content-center min-vh-100 align-items-center -->
+<div class="container mt-4">
+    <div class="card mt-4">
+        <div class="card-header bg-success text-center text-white fw-bold p-3">
+            {{ donation.donationType}}
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col mb-4">
+                    <label class="fw-bold">Donation Amount:</label>
+                    <span class="ms-4">{{ donation.amount | number }}</span>
+                </div>
+                <hr>
+                <div class="col mb-4">
+                    <label class="fw-bold">Donation Type:</label>
+                    <span class="ms-4"> {{ donation.donationType}} </span>
+                </div>
+                <hr>
+                <div class="col mb-4">
+                    <label class="fw-bold">Donation Description:</label>
+                    <span class="ms-4"> {{ donation.description }}</span>
+                </div>
+                <hr>
+                <div class="col mb-4">
+                    <label class="fw-bold">Donation Date:</label>
+                    <span class="ms-4">{{ donation.donatedDate | date: 'short'}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div routerLink="/dashboard/donor-donation-list" class="btn btn-outline-success col-md-12 btn-block">
+                <i class="fas fa-arrow-left"></i>
+                Back
+            </div>
+        </div>
+    </div>
+</div>

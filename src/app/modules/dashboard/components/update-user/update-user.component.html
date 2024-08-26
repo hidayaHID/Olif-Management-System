@@ -1,0 +1,91 @@
+<div class="container-fluid mt-4 d-flex justify-content-center">
+    <div class="container mt-4">
+        <form #updateUserForm="ngForm">
+            <div class="title text-uppercase text-center mb-4">
+                <h4 class="fw-bold">update user form</h4>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6 mb-4 form-group">
+                    <label for="">First Name</label>
+                    <input type="text" name="firstName" [(ngModel)]="updateUser.firstName"
+                        class="form-control input-box" required>
+                </div>
+                <div class="col-md-6 mb-4 form-group">
+                    <label for="">Last Name</label>
+                    <input type="text" name="lastName" [(ngModel)]="updateUser.lastName" class="form-control input-box"
+                        required>
+                </div>
+                <div class="col-md-4 mb-4 form-group">
+                    <label for="">Username</label>
+                    <input type="text" name="username" [(ngModel)]="updateUser.username" class="form-control input-box"
+                        required>
+                </div>
+                <div class="col-md-4 mb-4 form-group">
+                    <label for="">E-Mail</label>
+                    <input type="text" name="email" [(ngModel)]="updateUser.email" class="form-control input-box"
+                        required>
+                </div>
+                <div class="col-md-4 mb-4 form-group">
+                    <label for="">Phone No</label>
+                    <input type="text" name="phoneNumber" [(ngModel)]="updateUser.phoneNumber"
+                        class="form-control input-box" required>
+                </div>
+                <div class="col-md-4 mb-4 form-group">
+                    <label for="">DOB</label>
+                    <input type="date" name="dateOfBirth" [(ngModel)]="updateUser.dateOfBirth"
+                        class="form-control input-box" required>
+                </div>
+                <div class="col-md-4 mb-4 form-group">
+                    <label class="me-5 ps-2 mt-1 mb-1">Gender: </label><br>
+                    <div class="form-check form-check-inline me-5">
+                        <input class="form-check-input" type="radio" [(ngModel)]="updateUser.gender" name="gender"
+                            id="inlineRadio1" value="Male" checked>
+                        <label class="form-check-label" for="inlineRadio1">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" [(ngModel)]="updateUser.gender" name="gender"
+                            id="inlineRadio2" value="Female">
+                        <label class="form-check-label" for="inlineRadio2">Female</label>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 form-group">
+                    <label for="">Address</label>
+                    <input type="text" name="address" [(ngModel)]="updateUser.address" class="form-control input-box"
+                        required>
+                </div>
+                <div class="form-group col-md-6 mb-4">
+                    <label for="exampleInputEmail1" class="form-label">Profile-Image</label>
+                    <input type="file" ngModel name="profileImage" accept="image/*"
+                        (change)="onProfileImageChange($event.target.files[0])" class="form-control input-box">
+                </div>
+                <div class="form-group col-md-6 mb-4">
+                    <label for="exampleInputEmail1" class="form-label">Role</label>
+                    <select name="role" [(ngModel)]="updateUser.role" required ngModel="ROLE_STUDENT" id=""
+                        class="form-control">
+                        <option value="ROLE_ADMIN">ADMIN</option>
+                        <option value="ROLE_DONOR">DONOR</option>
+                    </select>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="me-5 ps-2">Status: </label>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                            <input type="checkbox" ngModel name="active" [(ngModel)]="updateUser.active"
+                                class="form-check-input shadow-none">
+                            Active
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group mt-4 col-md-12">
+                    <button type="submit" (click)="updateUserInfo()" class="btn btn-primary col-md-6 btnUpdateUser">Save
+                        Changes
+                    </button>
+                    <button type="button" routerLink="/dashboard/user-list"
+                        class="btn btn-warning float-end col-md-5">Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

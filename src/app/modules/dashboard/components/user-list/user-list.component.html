@@ -1,0 +1,121 @@
+<div class="container-fluid mt-4">
+    <button type="button" class="btn btn-primary btn-sm shadow-none" data-bs-toggle="modal"
+        data-bs-target="#addNewStaffModal">
+        <i class="fas fa-add"></i>
+        Add New User
+    </button>
+    <table class="table table-bordered table-hover bg-white text-center">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Profile</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Username</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Address</th>
+                <th scope="col">Role</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users | paginate: {
+                itemsPerPage: tableSize,
+                currentPage: pageNumber,
+                totalItems: count}; let i = index;">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>
+                    <img src="{{ user.profileImage }}" alt="{{ user.username }}" class="rounded-circle" height="40"
+                        width="40">
+                </td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.address }}</td>
+                <td>{{ user.role.substring(5) }}</td>
+                <td>
+                    <span [hidden]="!user.active" class="badge bg-success">Active</span>
+                    <span [hidden]="user.active" class="badge bg-danger">Not-Active</span>
+                </td>
+                <td>
+                    <button (click)="findUserByUserId(user.userId)" class="btn btn-primary btn-sm me-2">Edit</button>
+                    <button (click)="deleteUserByUserId(user.userId)" class="btn btn-danger btn-sm">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" style="cursor: pointer;">
+        <ul class="pagination justify-content-end">
+            <li class="  bg-white">
+                <a class="">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)"
+                        class="" style="cursor: pointer;">
+                    </pagination-controls>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+</div>
+
+<!-- ADD NEW HEAD Modal -->
+<div class="modal fade" id="addNewStaffModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form #addForm="ngForm" (ngSubmit)="addNewUser(addForm.value)">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Donor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label for="">First Name</label>
+                            <input type="text" name="firstName" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Last Name</label>
+                            <input type="text" name="lastName" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Username</label>
+                            <input type="text" name="username" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Password</label>
+                            <input type="password" name="password" ngModel placeholder="********" maxlength="8"
+                                class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">E-mail</label>
+                            <input type="text" name="email" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Phone Number</label>
+                            <input type="text" name="phoneNumber" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="">Address</label>
+                            <input type="text" name="address" ngModel class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Role</label>
+                            <select name="role" ngModel="ROLE_DONOR" class="form-select shadow-none">
+                                <option value="ROLE_ADMIN">ADMIN</option>
+                                <option value="ROLE_DONOR">DONOR</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="closeForm" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Close</button>
+                    <button type="submit" [disabled]="addForm.invalid" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

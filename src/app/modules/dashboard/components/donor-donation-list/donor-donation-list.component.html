@@ -1,0 +1,93 @@
+<div class="container-fluid mt-4">
+    <button type="button" class="btn btn-primary btn-sm shadow-none" data-bs-toggle="modal"
+        data-bs-target="#addNewStaffModal">
+        <i class="fas fa-add"></i>
+        Add New Donation
+    </button>
+    <table class="table table-bordered table-hover bg-white text-center">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Description</th>
+                <th scope="col">Donation Type</th>
+                <th scope="col">Date</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let donation of donations | paginate: {
+                itemsPerPage: tableSize,
+                currentPage: pageNumber,
+                totalItems: count}; let i = index;">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ donation.amount | number }}</td>
+                <td>{{ truncateDescription(donation.description, 5) }}</td>
+                <td>{{ donation.donationType }}</td>
+                <td>{{ donation.donatedDate | date: 'short'}}</td>
+
+                <td>
+                    <button (click)="findDonation(donation.donationId)"
+                        class="btn btn-success shadow-none btn-sm">View</button>
+                    <!-- <button (click)="deleteDonation(donation.donationId)"
+                        class="btn btn-danger shadow-none btn-sm">Delete</button> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" style="cursor: pointer;">
+        <ul class="pagination justify-content-end">
+            <li class="  bg-white">
+                <a class="">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)"
+                        class="" style="cursor: pointer;">
+                    </pagination-controls>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+</div>
+
+<!-- ADD NEW HEAD Modal -->
+<div class="modal fade" id="addNewStaffModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form #addForm="ngForm" (ngSubmit)="createNewDonation(addForm.value)">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Donation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                            <label for="">Description</label>
+                            <textarea name="description" ngModel class="form-control shadow-none"></textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="">Donation Type</label>
+                            <select name="donationType" ngModel="Money" class="form-select shadow-none">
+                                <option value="Money">Money</option>
+                                <option value="Clothes">Clothes</option>
+                                <option value="Foods">Foods</option>
+                                <option value="Constructions">Constructions</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                        <div *ngIf="addForm.value.donationType === 'Money'" class="col-md-12 mt-4">
+                            <label for="">Amount</label>
+                            <input type="number" name="amount" ngModel placeholder="0.0"
+                                class="form-control shadow-none" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="closeForm" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Close</button>
+                    <button type="submit" [disabled]="addForm.invalid" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

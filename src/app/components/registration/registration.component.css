@@ -1,0 +1,41 @@
+.container-fluid {
+  height: 100vh;
+  background: url(../../../assets/images/Hidaya.jpeg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  font-size: 25pp;
+}
+
+/*C:\Users\hiday\AngularProject\olif-management-system\src\assets\images*/
+
+form {
+  background-color: hsl(231, 35%, 57%);
+  padding: 50px 60px;
+  border-radius: 100px;
+  /* z-index: 9; */
+}
+
+.title h4 {
+  font-size: 60px;
+  /* line-height: 4px; */
+  letter-spacing: 1px;
+  font-style: bold;
+  font-weight: 100;
+  font: bolder;
+  font-color: black;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif sans-serif, Arial, sans-serif;
+}
+
+.form-group .input-box {
+  box-shadow: none;
+  /* border-radius: 10px; */
+  padding: 5px;
+}
+
+button {
+  border-radius: 50px;
+  padding: 10px;
+  color: #18a826c7;
+}

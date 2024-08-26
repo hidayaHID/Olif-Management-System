@@ -1,0 +1,31 @@
+<div class="container-fluid mt-5 d-flex justify-content-center">
+    <form #advertiseForm="ngForm" (ngSubmit)="createAdvertisementFormData(advertiseForm.value)" class="col-md-12">
+        <div class="title text-uppercase text-center mb-4">
+            <h4 class="fw-bold">Advertisement form</h4>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12 mb-4 ">
+                <label for="">Title</label>
+                <input type="text" name="title" ngModel class="form-control shadow-none" required>
+            </div>
+            <div class="col-md-12 mb-4 ">
+                <label for="">Description</label>
+                <textarea name="description" ngModel class="form-control shadow-none"></textarea>
+            </div>
+            <div class=" col-md-12 mb-4">
+                <label for="exampleInputEmail1" class="form-label">Image</label>
+                <input type="file" ngModel name="image" accept="image/*"
+                    (change)="onImageChange($event.target.files[0])" class="form-control shadow-none">
+            </div>
+            <div class="col-md-12">
+                <button type="submit" [disabled]="advertiseForm.invalid"
+                    class="btn btn-primary btn-sm col-md-6 shadow-none btnUpdateUser">Save Advertisement
+                </button>
+                <button type="button" routerLink="/dashboard/home"
+                    class="btn btn-warning btn-sm float-end col-md-5 shadow-none">Cancel
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

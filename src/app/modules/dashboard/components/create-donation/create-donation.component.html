@@ -1,0 +1,37 @@
+<div class="container-fluid mt-5">
+    <form #addForm="ngForm" (ngSubmit)="createNewDonation(addForm.value)">
+        <div class="card">
+            <div class="card-header text-uppercase text-center p-3">
+                <h4 class="fw-bold">donation form</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <label for="">Description</label>
+                        <textarea name="description" ngModel class="form-control shadow-none"></textarea>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="">Donation Type</label>
+                        <select name="donationType" ngModel="Money" class="form-select shadow-none">
+                            <option value="Money">Money</option>
+                            <option value="Clothes">Clothes</option>
+                            <option value="Foods">Foods</option>
+                            <option value="Constructions">Constructions</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    <div *ngIf="addForm.value.donationType === 'Money'" class="col-md-12 mt-4">
+                        <label for="">Amount</label>
+                        <input type="number" name="amount" ngModel placeholder="0.0" class="form-control shadow-none"
+                            required>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" [disabled]="addForm.invalid" class="btn btn-primary col-md-12">
+                    Save Donation
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,44 @@
+<!-- d-flex justify-content-center min-vh-100 align-items-center -->
+<div class="container mt-4">
+    <form #donationForm="ngForm" (ngSubmit)="makeDonation()">
+        <div class="card mt-4">
+            <div class="card-header bg-success text-center text-white fw-bold p-3">
+                Make Donation
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="fw-bold">Select House</label>
+                        <select name="house_id" ngModel (change)="getHouseId($event)" class="form-select shadow-none"
+                            required>
+                            <option value="" selected>Not-Select</option>
+                            <option *ngFor="let house of houses" value="{{ house.houseId }}">
+                                {{ house.houseNumber }}-{{ house.address }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="fw-bold">Select Donation</label>
+                        <select name="house_id" ngModel (change)="getDonationId($event)" class="form-select shadow-none"
+                            required>
+                            <option value="" selected>Not-Select</option>
+                            <option *ngFor="let donation of donations" value="{{ donation.donationId }}">
+                                {{ donation.donationType }}-{{ donation.amount | number }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-outline-success col-md-6 btn-block">
+                    Donate Now
+                </button>
+                <button routerLink="/dashboard/donor-donation-list"
+                    class="btn btn-outline-warning float-end col-md-5 btn-block">
+                    <i class="fas fa-arrow-left"></i>
+                    Back
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
